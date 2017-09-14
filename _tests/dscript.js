@@ -17,8 +17,8 @@ describe('datascript build/parse script no encryption', function () {
                 .setOp('write')
                 .setDataSet('posts')
                 .setJson(obj);
-
-        assert.equal(dscript.build().toString('hex'), "2005706f73747339543701f0f000e660259ff40004f202696401f1047479706504706f7374f1057469746c650474657374f1047465787409717765717765313233")
+        
+        assert.equal(dscript.build().toString('hex'), "2005706f7374733954371f000f0fe660259ff40004f202696401f1047479706504706f7374f1057469746c650474657374f1047465787409717765717765313233")
     });
 
     it('should be okay parse', function () {

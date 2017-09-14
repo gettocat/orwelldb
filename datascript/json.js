@@ -47,7 +47,7 @@ bitPony.extend('json', function () {
                     item.value = parseFloat(res.result);
                 else if (item.type == FUNC) {
                     item.value = new Function("return " + res.result.toString())()
-                } else{
+                } else {
                     item.value = res.result.toString();
                 }
                 offset = res.offset;
@@ -66,7 +66,7 @@ bitPony.extend('json', function () {
                 item.type = res.result;
                 offset = res.offset;
 
-                res = stream.strin3(offset);
+                res = stream.string(offset);
                 item.key = res.result.toString();
                 offset = res.offset;
 
@@ -144,8 +144,9 @@ bitPony.extend('json', function () {
 
             var mysign = parseInt(bitPony.tool.sha256(bitPony.tool.sha256(buffer.slice(res.offset, buffer.length))).slice(0, 4).toString('hex'), 16);
 
-            if (version != VERSION)
-                throw new Error('binay json package is not valid version recived');
+            //another version its ok
+            //if (version != VERSION)
+            //throw new Error('binay json package is not valid version recived');
 
             if (mysign != sign)
                 throw new Error('binay json package is not valid');
@@ -168,7 +169,7 @@ bitPony.extend('json', function () {
                 } else if (type == NUMBER)
                     stream.var_int(val, true);
                 else {
-                    
+
                     if (val.toString() != "") {
                         stream.string(val.toString() || "", true)
                     } else {
@@ -242,7 +243,7 @@ bitPony.extend('json', function () {
                     } else if (o == null) {
                         t = NULL;
                         o = 0;
-                    } else if (o!== "" && isFinite(o)) {
+                    } else if (o !== "" && isFinite(o)) {
                         t = NUMBER;
                     }
 
