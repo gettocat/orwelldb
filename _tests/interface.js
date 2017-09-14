@@ -70,7 +70,7 @@ describe('orwelldb', function () {
 
     it('import without encryption', function (done) {
 
-        new orwell.import({//create db community, add collection, update settings and import 1 entry.
+        orwell.import({//create db community, add collection, update settings and import 1 entry.
             name: 'community1',
             public_key: "047f3cd8b44caccd0af9b05ea31f7151520df30c2f2c3b8c451180f9632bc3604e9b77abfa3232f1247ae44fdf380404851211135012b3caf2fca22a7795e95fdb"
         },
@@ -148,14 +148,14 @@ describe('orwelldb encryption', function () {
 
     it('import', function (done) {
 
-        new orwell.import({//create db community, add collection, update settings and import 1 entry.
+        orwell.import({//create db community, add collection, update settings and import 1 entry.
             name: 'community',
             public_key: "047f3cd8b44caccd0af9b05ea31f7151520df30c2f2c3b8c451180f9632bc3604e9b77abfa3232f1247ae44fdf380404851211135012b3caf2fca22a7795e95fdb"
         },
                 'ef02fd34011905706f737473fd2a0153fd00019b76ff3429cc75249c8d0e1c3b96b62f143ad7f50cacb135513d89adbbd76aeb7ed3d54a035017a1a9d7ba5ef3f68bd29dfc241aa452b48a97232a4cc8bf80cd86fbb26078d1512eed5b40f520c7bc2f8f32abfe936f062255e32458a0eb747771ddcc7d43938d377ebb1e0c2c000b154fa9de0c00a80535c91c04dc0898d342b1006dbaf97af0eb941cad4e4ca1189c7e6c84be366ea085ca47ee6ff5a298d21b0d897de426c46b59d23fe5a5f29500e5c7557ce2cfe8d6ea6a694614928132ea68b095c99a95a274df928ee3100319db3e8b018bb85f3ba8245f96b9fc48586cbe14cbd6238656d468e6570d7202b0f425e6432b6e3b7accacdf8ebd58ba5856015759585e929b496e255e3e8ec6f826523292ddb35ec05e90163559e0819c6ffc4d228787fd34012005706f737473fd2a0153fd000146254e9c7d0b93130f69cc2d2c29d367ae4b8db7a9188bd2d2127d2fa846cf6e084515d1206c23358d40826e0133b8be15de8186f586e4fe6fffb54ca6e746c8f9da91aa1c7320c2dc1f88fcd276fa644a4daafdd37a9dd178a1953281e7dfe4f795da750490a9eb5d12bcc65508382c6d872428ac11b300e5e639605b754f0a54c8142c2255dcefcac2ccade40866e0f58c2567bf8303932270c9126f5da8773722482e2bebb00de1224a60fb10aa12059a96c49ccc2143f8ef8ddd526f35c3019a352c7c3b636fd8c8574e6b532151ace3117512b27959658cee9b3ab747a360d42d931c91bba8d98eff8f7f45fd0737efbec4ae586028ad6cd890a74f3c255601575958bf5d04e52da1ba417707e6c0dfd44e3cee32a0992825cb8a62d48321eb8ac44987'
                 )
                 .then(function (results) {
-
+                    console.log(results);
                     assert.equal(results.length, 2)
 
                     assert.equal(results[0].status, 0)//status
@@ -176,7 +176,7 @@ describe('orwelldb encryption', function () {
 
     it('import no key - can not read data, not saving', function (done) {
 
-        new orwell.import({//create db community, add collection, update settings and import 1 entry.
+        orwell.import({//create db community, add collection, update settings and import 1 entry.
             name: 'community1', //try to sync to another database, wich no have keys in keystore
             public_key: "047f3cd8b44caccd0af9b05ea31f7151520df30c2f2c3b8c451180f9632bc3604e9b77abfa3232f1247ae44fdf380404851211135012b3caf2fca22a7795e95fdb"
         },

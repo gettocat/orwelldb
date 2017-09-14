@@ -18,6 +18,7 @@ orwell.export = function (options, cb) {
                 })
             })
             .catch(function (err) {
+                transaction.rollback();
                 console.log(err)
             })
 
