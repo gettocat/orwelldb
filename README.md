@@ -1,5 +1,12 @@
+# Idea
+
+[![](https://gettocat.github.io/orwelldb/orwelldb_overview.jpeg)](https://gettocat.github.io/orwelldb/orwelldb_overview.jpeg)
+
 # orwelldb
 Library wich syncronize data beetween blockchain and database
+
+# based
+All protocol based on network bitcoin types, like var_int, var_str and other. You can find this types and parser/builder for that in my another package: [bitPony](https://github.com/gettocat/bitPony)
 
 # Orwelldb usage
 
