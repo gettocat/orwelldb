@@ -1,27 +1,37 @@
 {
-    "name": "orwelldb",
-    "version": "0.0.1",
-    "description": "Library, wich helps syncronize blockchain and any database use datascript protocol to write operations (can be wroten in blockchain transactions hex like scriptSig or scriptPubKey)",
-    "keywords": ["database", "blockchain", "blockchainbased", "p2p", "nosql", "orwelldb", "orwell", "bitpony", "datascript"],
-    "main": "orwelldb.js",
-    "tests": "./_tests/",
-    "dependencies": {
-        "bitpony": "^0.0.1",
-        "lokijs": "^1.5.0",
-        "node-rsa": "^0.4.2"
-    },
-    "devDependencies": {
-        "orm": "^3.2.4",
-        "mocha": "^3.5.3"
-    },
-    "author": "Nanocat (@orwellcat) <alex@letris.ru>",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/gettocat/orwelldb/issues"
-    },
-    "homepage": "https://github.com/gettocat/orwelldb",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/gettocat/orwelldb"
-    }
+  "name": "orwelldb",
+  "version": "0.0.2",
+  "description": "Library, wich helps syncronize blockchain and any database use datascript protocol to write operations (can be wroten in blockchain transactions hex like scriptSig or scriptPubKey)",
+  "keywords": [
+    "database",
+    "blockchain",
+    "blockchainbased",
+    "p2p",
+    "nosql",
+    "orwelldb",
+    "orwell",
+    "bitpony",
+    "datascript"
+  ],
+  "main": "orwelldb.js",
+  "tests": "./_tests/",
+  "dependencies": {
+    "bitpony": "^0.0.1",
+    "lokijs": "^1.5.0",
+    "node-rsa": "^0.4.2"
+  },
+  "devDependencies": {
+    "orm": "^3.2.4",
+    "mocha": "^3.5.3"
+  },
+  "author": "Nanocat (@orwellcat) <alex@letris.ru>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gettocat/orwelldb/issues"
+  },
+  "homepage": "https://github.com/gettocat/orwelldb",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gettocat/orwelldb"
+  }
 }
