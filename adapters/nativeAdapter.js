@@ -116,8 +116,11 @@ nosqlDataSet.prototype.updateItem = function (data) {
 
 nosqlDataSet.prototype.deleteItem = function (id) {
 
-    var data = this.raw().chain().findOne({oid: {$aeq: id}}).data();
-    data.remove();
+    this.getItem(id)
+            .then(function (item) {
+                if (item)
+                    item.remove();
+            })
 
     return true;
 
