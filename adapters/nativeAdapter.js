@@ -115,14 +115,12 @@ nosqlDataSet.prototype.updateItem = function (data) {
 }
 
 nosqlDataSet.prototype.deleteItem = function (id) {
-
-    this.getItem(id)
-            .then(function (item) {
-                if (item)
-                    item.remove();
-            })
-
-    return true;
+    var f = this;
+    return new Promise(function (resolve) {
+        var res = false;
+        res = f.raw().findAndRemove({id: id});
+        resolve(res)
+    })
 
 }
 

@@ -76,7 +76,7 @@ crypto.prototype.addPem = function (pem, datasetname, algorithm) {
                     var obj = {dbname: f.name, pem: pem, algorithm: algorithm || 'rsa'};
                     if (datasetname)
                         obj.dataset = datasetname;
-                    return this.keyStoreAccess()
+                    return f.keyStoreAccess()
                             .then(function (db) {
                                 return db.insertItem('pem', obj)
                             })

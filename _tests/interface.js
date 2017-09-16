@@ -23,6 +23,48 @@ describe('orwelldb', function () {
 
     });
 
+    it('remove Pem', function (done) {
+        var id, _ks;
+        $({
+            name: 'test1',
+            public_key: "047f3cd8b44caccd0af9b05ea31f7151520df30c2f2c3b8c451180f9632bc3604e9b77abfa3232f1247ae44fdf380404851211135012b3caf2fca22a7795e95fdb"
+        })
+                .then(function (db) {
+                    return db.addPem(pem)
+                })
+                .then(function (args) {
+                    id = args.data.oid;
+                    assert(args.data.oid && args.data.pem)
+
+                    return $({name: 'test1', public_key: "047f3cd8b44caccd0af9b05ea31f7151520df30c2f2c3b8c451180f9632bc3604e9b77abfa3232f1247ae44fdf380404851211135012b3caf2fca22a7795e95fdb"})
+
+                })
+                .then(function (db) {
+                    return db.keyStoreAccess()
+                })
+                .then(function (keystore) {
+                    _ks = keystore;
+                    return keystore.deleteItem('pem', id)
+                })
+                .then(function (res) {
+
+                    assert.equal(res.data.oid, id);
+                    return new Promise(function (resolve) {
+                        resolve()
+                    })
+                })
+                .then(function () {
+                    return _ks.getItem('pem', id);
+                })
+                .then(function (item) {
+
+                    assert.equal(item.oid, undefined);
+                    done();
+                })
+
+    });
+
+
 });
 
 

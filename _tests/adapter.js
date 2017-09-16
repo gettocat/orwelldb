@@ -6,7 +6,7 @@ var $ = orwell.$;
 var fs = require('fs')
 var pem = fs.readFileSync('./_tests/pem').toString();
 
-describe('orwelldb', function () {
+describe('orwelldb mysql adapter', function () {
 
     it('add Pem', function (done) {
 
