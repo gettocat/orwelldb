@@ -1,6 +1,6 @@
 {
   "name": "orwelldb",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Library, wich helps syncronize blockchain and any database use datascript protocol to write operations (can be wroten in blockchain transactions hex like scriptSig or scriptPubKey)",
   "keywords": [
     "database",
