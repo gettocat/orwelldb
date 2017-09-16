@@ -33,9 +33,13 @@ var crypto = function (options, onloaded) {
 
 util.inherits(crypto, protocol);
 
+crypto.prototype.keyStoreAccess = function() {
+    return $db(this.options.keystore.name || "keystore", this.options.keystore);
+}
+
 crypto.prototype.initKeyStore = function () {
 
-    return $db(this.options.keystore.name || "keystore", this.options.keystore)//its local database
+    return this.keyStoreAccess()//its local database
             .then(function (dbp) {
                 return dbp.getCollection('pem')
             })
@@ -44,7 +48,7 @@ crypto.prototype.initKeyStore = function () {
 
 crypto.prototype.getPem = function (datasetname) {
     var dname = this.name, _dataset
-    return $db(this.options.keystore.name || "keystore")//get key for db/dataset, if not exist - try search db key only
+    return this.keyStoreAccess()//get key for db/dataset, if not exist - try search db key only
             .then(function (dbp) {
                 return dbp.getCollection('pem')
             })
@@ -72,7 +76,7 @@ crypto.prototype.addPem = function (pem, datasetname, algorithm) {
                     var obj = {dbname: f.name, pem: pem, algorithm: algorithm || 'rsa'};
                     if (datasetname)
                         obj.dataset = datasetname;
-                    return $db(f.options.keystore.name || "keystore")
+                    return this.keyStoreAccess()
                             .then(function (db) {
                                 return db.insertItem('pem', obj)
                             })
