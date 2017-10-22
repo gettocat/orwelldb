@@ -1,9 +1,17 @@
 var bitPony = require('bitpony');
 
+encodeUtf8 = function (str) {
+    return unescape(encodeURIComponent(str));
+};
+
+
+decodeUtf8 = function (str) {
+    return decodeURIComponent(escape(str));
+};
 
 bitPony.extend('json', function () {
 
-    var VERSION = 0xf0f001f, FUNC = 0xf5, OBJ = 0xf4, STR = 0xf1, NUMBER = 0xf2, FLOAT = 0xf6, ARR = 0xf3, NULL = 0xf0;
+    var VERSION = 0xf0f002f, FUNC = 0xf5, OBJ = 0xf4, STR = 0xf1, NUMBER = 0xf2, FLOAT = 0xf6, ARR = 0xf3, NULL = 0xf0, BOOL = 0xf7;
     //first byte - type:
     //0xf4 - json object
     //0xf1 - string next
@@ -32,23 +40,25 @@ bitPony.extend('json', function () {
                 offset = res.offset;
 
                 res = stream.string(offset);
-                item.key = res.result.toString();
+                item.key = decodeUtf8(res.result.toString());
                 offset = res.offset;
-                if (item.type == NUMBER)
+                if (item.type == NUMBER || item.type == BOOL)
                     res = stream.var_int(offset);
                 else//str
                     res = stream.string(offset);
 
                 if (item.type == NULL)
                     item.value = null;
+                else if (item.type == BOOL)
+                    item.value = !!res.result;
                 else if (item.type == NUMBER)
                     item.value = res.result;
                 else if (item.type == FLOAT)
                     item.value = parseFloat(res.result);
                 else if (item.type == FUNC) {
-                    item.value = new Function("return " + res.result.toString())()
+                    item.value = new Function("return " + decodeUtf8(res.result.toString()))()
                 } else {
-                    item.value = res.result.toString();
+                    item.value = decodeUtf8(res.result.toString());
                 }
                 offset = res.offset;
 
@@ -67,7 +77,7 @@ bitPony.extend('json', function () {
                 offset = res.offset;
 
                 res = stream.string(offset);
-                item.key = res.result.toString();
+                item.key = decodeUtf8((res.result.toString()));
                 offset = res.offset;
 
                 res = stream.var_int(offset);
@@ -104,7 +114,7 @@ bitPony.extend('json', function () {
                 offset = res.offset;
 
                 res = stream.string(offset);
-                item.key = res.result.toString();
+                item.key = decodeUtf8(res.result.toString());
                 offset = res.offset;
 
                 res = stream.var_int(offset);
@@ -161,15 +171,15 @@ bitPony.extend('json', function () {
             var serializePrimitive = function (stream, type, key, val) {
 
                 stream.uint8(type, true);
-                stream.string(key, true)
+                stream.string(new Buffer(encodeUtf8(key)), true)
                 if (type == NULL) {
                     stream.var_int(0, true);
-                } else if (type == NUMBER)
+                } else if (type == NUMBER || type == BOOL)
                     stream.var_int(val, true);
                 else {
 
                     if (val.toString() != "") {
-                        stream.string(val.toString() || "", true)
+                        stream.string(new Buffer(encodeUtf8(val.toString() || "")), true)
                     } else {
                         stream.uint8(0, true)
                     }
@@ -181,7 +191,7 @@ bitPony.extend('json', function () {
 
 
                 stream.uint8(ARR, true);
-                stream.string(key, true);
+                stream.string(new Buffer(encodeUtf8(key)), true);
                 stream.var_int(arr.length, true);
 
                 if (sort)
@@ -204,10 +214,10 @@ bitPony.extend('json', function () {
                         t = NULL;
                         arr[i] = 0;
                     } else if (arr[i] === true) {
-                        t = NUMBER;
+                        t = BOOL;
                         arr[i] = 1;
                     } else if (arr[i] === false) {
-                        t = NUMBER;
+                        t = BOOL;
                         arr[i] = 0;
                     } else if (arr[i] !== "" && /^\d+$/.test(arr[i]) && isFinite(arr[i]))
                         t = NUMBER;
@@ -220,9 +230,12 @@ bitPony.extend('json', function () {
 
             var serializeObject = function (stream, key, obj, sort) {
 
+                if (obj == null || typeof obj == 'undefined')
+                    obj = {};
+
                 var keys = Object.keys(obj);
                 stream.uint8(OBJ, true);
-                stream.string("" + key, true);
+                stream.string(new Buffer(encodeUtf8("" + key)), true);
                 stream.var_int(keys.length, true);
 
                 if (sort)
@@ -249,11 +262,11 @@ bitPony.extend('json', function () {
                         o = 0;
                     } else if (o === true) {
                         o = 1;
-                        t = NUMBER;
+                        t = BOOL;
                     } else if (o === false) {
                         o = 0;
-                        t = NUMBER;
-                    } else if (o !== "" && /^\d+$/.test(o) && isFinite(o)) {
+                        t = BOOL;
+                    } else if (o !== "" && /^\d+$/.test(o) && isFinite(o) && (typeof o != 'string')) {
                         t = NUMBER;
                     }
 
