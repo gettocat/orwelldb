@@ -11,7 +11,7 @@ decodeUtf8 = function (str) {
 
 bitPony.extend('json', function () {
 
-    var VERSION = 0xf0f002f, FUNC = 0xf5, OBJ = 0xf4, STR = 0xf1, NUMBER = 0xf2, FLOAT = 0xf6, ARR = 0xf3, NULL = 0xf0, BOOL = 0xf7;
+    var VERSION = 0xf0f001f, FUNC = 0xf5, OBJ = 0xf4, STR = 0xf1, NUMBER = 0xf2, FLOAT = 0xf6, ARR = 0xf3, NULL = 0xf0, BOOL = 0xf7;
     //first byte - type:
     //0xf4 - json object
     //0xf1 - string next

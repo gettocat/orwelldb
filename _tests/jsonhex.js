@@ -46,6 +46,7 @@ var tests = [
     {name: 'empty-int', args: {i: 0}},
     {name: 'empty-obj', args: {obj: {}}},
     {name: 'char test', args: {a: '\n', c: '\r', d: '', e: 'o', b: 'test', i: 127, o: 0xf}},
+    {name: 'str test', args: {'str1': '"asdasd"', 'str2': "asfasf'safasfaf'asfasf\'asfasfa\"asdasd\"sf"}},
 ]
 
 var obj = {id: 1, type: 'post', title: 'test', text: 'qweqwe123'};
