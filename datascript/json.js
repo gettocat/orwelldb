@@ -89,7 +89,6 @@ bitPony.extend('json', function () {
 
                     offset = res.offset;
                     item.value.push(res.item.value);//keys is null
-
                 }
 
                 return {
@@ -126,7 +125,6 @@ bitPony.extend('json', function () {
 
                     offset = res.offset;
                     item.value[res.item.key] = res.item.value;
-
                 }
 
                 return {
@@ -205,7 +203,13 @@ bitPony.extend('json', function () {
                     } else if (arr[i] == null) {
                         t = NULL;
                         arr[i] = 0;
-                    } else if (isFinite(arr[i]))
+                    } else if (arr[i] === true) {
+                        t = NUMBER;
+                        arr[i] = 1;
+                    } else if (arr[i] === false) {
+                        t = NUMBER;
+                        arr[i] = 0;
+                    } else if (arr[i] !== "" && /^\d+$/.test(arr[i]) && isFinite(arr[i]))
                         t = NUMBER;
 
                     serializePrimitive(stream, t, "", arr[i]);
@@ -243,7 +247,13 @@ bitPony.extend('json', function () {
                     } else if (o == null) {
                         t = NULL;
                         o = 0;
-                    } else if (o !== "" && isFinite(o)) {
+                    } else if (o === true) {
+                        o = 1;
+                        t = NUMBER;
+                    } else if (o === false) {
+                        o = 0;
+                        t = NUMBER;
+                    } else if (o !== "" && /^\d+$/.test(o) && isFinite(o)) {
                         t = NUMBER;
                     }
 

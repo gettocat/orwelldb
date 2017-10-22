@@ -16,7 +16,7 @@ var dscript = function (options, pem, algorithm) {
         this.dataset = options.dataset;
         this.operation = options.operation;
         this.pem = pem;
-        this.algorithm = options.algorithm;
+        this.algorithm = algorithm || options.algorithm || 'rsa';
         this.canRead = this.success = true;
     }
 
