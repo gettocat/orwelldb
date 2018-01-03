@@ -17,7 +17,7 @@ protocol.prototype.createDataSet = function (datasetname, data) {
         dataset: datasetname,
         content: {
             owner_key: data.owner_key || "",
-            writeScript: data.writeScript || "5560",
+            writeScript: ((""+data.writeScript) == '5560' || !data.writeScript) ? data.writeScript : "",
             privileges: data.privileges || []
         }
     };
