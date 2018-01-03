@@ -1,6 +1,7 @@
 var util = require('util');
 var base = require('./native')
 var bitPony = require('bitpony')
+var tools = require('./tools')
 
 function protocol(options, onloaded) {
     this.hash = bitPony.tool.sha256(new Buffer(options.public_key || "")).toString('hex')
@@ -17,7 +18,7 @@ protocol.prototype.createDataSet = function (datasetname, data) {
         dataset: datasetname,
         content: {
             owner_key: data.owner_key || this.pubkey,
-            writeScript: ((""+data.writeScript) == '5560' || !data.writeScript) ? data.writeScript : "",
+            writeScript: (("" + data.writeScript) == '5560' || !data.writeScript) ? data.writeScript : "",
             privileges: data.privileges || []
         }
     };
@@ -56,7 +57,7 @@ protocol.prototype.writeData = function (datasetname, data) {
                     if (script == "5560") {//0x55 0x60 mean PUSHDATA_PRIVKEYWRITER OP_CHECKDBPRIVILEGES
                         var privileges = settings.privileges instanceof Array ? settings.privileges : [];
 
-                        if (privileges.indexOf(f.pubkey) >= 0 || settings.owner_key == f.pubkey)
+                        if (privileges.indexOf(f.pubkey) >= 0 || settings.owner_key == f.pubkey || tools.generateAddressHash(f.pubkey) == f.name)
                             r(true);
                         else
                             r(false)
@@ -162,7 +163,7 @@ protocol.prototype.setSettings = function (datasetname, data) {
             .then(function (item) {
                 var act = 'settings', args = []
                 if (!item) {
-                    var settings = {oid: 1, writeScript: ((""+data.writeScript) == '5560' || !data.writeScript) ? data.writeScript : "", owner_key: data.owner_key || f.pubkey, privileges: data.privileges || []};
+                    var settings = {oid: 1, writeScript: (("" + data.writeScript) == '5560' || !data.writeScript) ? data.writeScript : "", owner_key: data.owner_key || f.pubkey, privileges: data.privileges || []};
                     //item = coll.insertItem(settings);
                     args = {
                         operation: 'insert',
@@ -171,7 +172,7 @@ protocol.prototype.setSettings = function (datasetname, data) {
                         status: 0,
                     }
                 } else {
-                    item.writeScript = ((""+data.writeScript) == '5560' || !data.writeScript) ? data.writeScript : "";
+                    item.writeScript = (("" + data.writeScript) == '5560' || !data.writeScript) ? data.writeScript : "";
                     item.privileges = data.privileges || [];
 
                     if (!item.owner_key && data.owner_key)//only if not exist yet, cant be updated or changed
@@ -194,7 +195,7 @@ protocol.prototype.setSettings = function (datasetname, data) {
             .then(function (args) {
                 _args = args
                 return new Promise(function (r) {
-                    if (!_args.data.owner_key)
+                    if (!_args.data.owner_key || tools.generateAddressHash(f.pubkey) == f.name)
                         r(0)
                     else if (_args.data.owner_key == f.pubkey || _args.data.owner_key == f.hash)
                         r(1);

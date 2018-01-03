@@ -375,7 +375,7 @@ describe('orwelldb manual', function () {
                 .then(function (settings) {
                     assert.equal(settings.oid, 1)
                     assert.equal(settings.owner_key, '047f3cd8b44caccd0af9b05ea31f7151520df30c2f2c3b8c451180f9632bc3604e9b77abfa3232f1247ae44fdf380404851211135012b3caf2fca22a7795e95fdb')
-                    assert.equal(settings.writeScript, '5560') //0x55 0x60
+                    assert.equal(settings.writeScript, '') //0x55 0x60
                     done()
                 })
                 .catch(function (err) {
