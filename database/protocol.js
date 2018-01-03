@@ -16,7 +16,7 @@ protocol.prototype.createDataSet = function (datasetname, data) {
         operation: 'create',
         dataset: datasetname,
         content: {
-            owner_key: data.owner_key || "",
+            owner_key: data.owner_key || this.pubkey,
             writeScript: ((""+data.writeScript) == '5560' || !data.writeScript) ? data.writeScript : "",
             privileges: data.privileges || []
         }
@@ -162,7 +162,7 @@ protocol.prototype.setSettings = function (datasetname, data) {
             .then(function (item) {
                 var act = 'settings', args = []
                 if (!item) {
-                    var settings = {oid: 1, writeScript: ((""+data.writeScript) == '5560' || !data.writeScript) ? data.writeScript : "", owner_key: data.owner_key || '', privileges: data.privileges || []};
+                    var settings = {oid: 1, writeScript: ((""+data.writeScript) == '5560' || !data.writeScript) ? data.writeScript : "", owner_key: data.owner_key || f.pubkey, privileges: data.privileges || []};
                     //item = coll.insertItem(settings);
                     args = {
                         operation: 'insert',
