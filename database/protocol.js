@@ -162,7 +162,7 @@ protocol.prototype.setSettings = function (datasetname, data) {
             .then(function (item) {
                 var act = 'settings', args = []
                 if (!item) {
-                    var settings = {oid: 1, writeScript: data.writeScript || '5560', owner_key: data.owner_key || '', privileges: data.privileges || []};
+                    var settings = {oid: 1, writeScript: ((""+data.writeScript) == '5560' || !data.writeScript) ? data.writeScript : "", owner_key: data.owner_key || '', privileges: data.privileges || []};
                     //item = coll.insertItem(settings);
                     args = {
                         operation: 'insert',
@@ -171,7 +171,7 @@ protocol.prototype.setSettings = function (datasetname, data) {
                         status: 0,
                     }
                 } else {
-                    item.writeScript = data.writeScript || "5560";
+                    item.writeScript = ((""+data.writeScript) == '5560' || !data.writeScript) ? data.writeScript : "";
                     item.privileges = data.privileges || [];
 
                     if (!item.owner_key && data.owner_key)//only if not exist yet, cant be updated or changed
