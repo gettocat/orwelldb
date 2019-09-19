@@ -117,9 +117,9 @@ nosqlDataSet.prototype.updateItem = function (data) {
 nosqlDataSet.prototype.deleteItem = function (id) {
     var f = this;
     return new Promise(function (resolve) {
-        var res = false;
-        res = f.raw().findAndRemove({oid: {$aeq: id}});
-        resolve(res)
+        let data = f.raw().find({oid: {$aeq: id}});
+        f.raw().findAndRemove({oid: {$aeq: id}});
+        resolve({data: data[0]})
     })
 
 }

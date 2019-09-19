@@ -47,7 +47,6 @@ describe('orwelldb', function () {
                     return keystore.deleteItem('pem', id)
                 })
                 .then(function (res) {
-
                     assert.equal(res.data.oid, id);
                     return new Promise(function (resolve) {
                         resolve()
@@ -57,8 +56,7 @@ describe('orwelldb', function () {
                     return _ks.getItem('pem', id);
                 })
                 .then(function (item) {
-
-                    assert.equal(item.oid, undefined);
+                    assert.equal(item, undefined);
                     done();
                 })
 
@@ -116,7 +114,7 @@ describe('orwelldb', function () {
             name: 'community1',
             public_key: "047f3cd8b44caccd0af9b05ea31f7151520df30c2f2c3b8c451180f9632bc3604e9b77abfa3232f1247ae44fdf380404851211135012b3caf2fca22a7795e95fdb"
         },
-                'ef023e1905706f73747336543401f0f000873b5bebf40003f1096f776e65725f6b657900f20b7772697465536372697074fdb815f30a70726976696c6567657300412005706f73747339543701f0f000b5d523d2f40003f1036f69640c376635616561326666393766f1057469746c65057465737431f1047465787406776861743f21'
+                'ef02bc1905706f737473b454b2010070d976c405000304096f776e65725f6b65798230343766336364386234346361636364306166396230356561333166373135313532306466333063326632633362386334353131383066393633326263333630346539623737616266613332333266313234376165343466646633383034303438353132313131333530313262336361663266636132326137373935653935666462040b777269746553637269707400060a70726976696c65676573003f2005706f7374733754350100f40fff9b05000304036f69640c37663561656132666639376604057469746c6505746573743104047465787406776861743f21'
                 )
                 .then(function (results) {
                     assert.equal(results.length, 2)
@@ -161,7 +159,6 @@ describe('orwelldb', function () {
                         arr.push(res.toJSON())
                     }
 
-
                     assert.equal(arr[0].dataset, 'posts')
                     assert.equal(arr[0].operator, 'create')
                     assert.equal(arr[0].canRead, true)
@@ -194,18 +191,17 @@ describe('orwelldb encryption', function () {
             name: 'community',
             public_key: "047f3cd8b44caccd0af9b05ea31f7151520df30c2f2c3b8c451180f9632bc3604e9b77abfa3232f1247ae44fdf380404851211135012b3caf2fca22a7795e95fdb"
         },
-                'ef02fd34011905706f737473fd2a0153fd00019b76ff3429cc75249c8d0e1c3b96b62f143ad7f50cacb135513d89adbbd76aeb7ed3d54a035017a1a9d7ba5ef3f68bd29dfc241aa452b48a97232a4cc8bf80cd86fbb26078d1512eed5b40f520c7bc2f8f32abfe936f062255e32458a0eb747771ddcc7d43938d377ebb1e0c2c000b154fa9de0c00a80535c91c04dc0898d342b1006dbaf97af0eb941cad4e4ca1189c7e6c84be366ea085ca47ee6ff5a298d21b0d897de426c46b59d23fe5a5f29500e5c7557ce2cfe8d6ea6a694614928132ea68b095c99a95a274df928ee3100319db3e8b018bb85f3ba8245f96b9fc48586cbe14cbd6238656d468e6570d7202b0f425e6432b6e3b7accacdf8ebd58ba5856015759585e929b496e255e3e8ec6f826523292ddb35ec05e90163559e0819c6ffc4d228787fd34012005706f737473fd2a0153fd000146254e9c7d0b93130f69cc2d2c29d367ae4b8db7a9188bd2d2127d2fa846cf6e084515d1206c23358d40826e0133b8be15de8186f586e4fe6fffb54ca6e746c8f9da91aa1c7320c2dc1f88fcd276fa644a4daafdd37a9dd178a1953281e7dfe4f795da750490a9eb5d12bcc65508382c6d872428ac11b300e5e639605b754f0a54c8142c2255dcefcac2ccade40866e0f58c2567bf8303932270c9126f5da8773722482e2bebb00de1224a60fb10aa12059a96c49ccc2143f8ef8ddd526f35c3019a352c7c3b636fd8c8574e6b532151ace3117512b27959658cee9b3ab747a360d42d931c91bba8d98eff8f7f45fd0737efbec4ae586028ad6cd890a74f3c255601575958bf5d04e52da1ba417707e6c0dfd44e3cee32a0992825cb8a62d48321eb8ac44987'
+                'ef02342005706f7374732c542a010003caf5c105000304036f69640c333461383538656334346162020474657374fd5d2f020361637404342005706f7374732c542a0100c27c249705000304036f69640c626361343438656334616666020474657374fd5d2f020361637404'
                 )
                 .then(function (results) {
-                    console.log(results);
                     assert.equal(results.length, 2)
 
                     assert.equal(results[0].status, 0)//status
-                    assert.equal(results[0].data.oid, 1)//object
+                    assert.equal(results[0].data.oid, '34a858ec44ab')//object
                     assert.equal(results[0].operation, 'update')//operation
 
                     assert.equal(results[1].status, 0)
-                    assert.equal(results[1].data.oid, '7f5aea2ff97f')//object
+                    assert.equal(results[1].data.oid, 'bca448ec4aff')//object
                     assert(results[1].operation == 'update' || results[1].operation == 'insert')//operation
                     done();
 
@@ -305,7 +301,7 @@ describe('orwelldb manual', function () {
                     return dataset.findItems()
                 })
                 .then(function (lst) {
-                    assert.equal(lst.length, 1);
+                    assert.equal(lst.length, 3);
                     done()
                 })
                 .catch(function (err) {
@@ -314,7 +310,7 @@ describe('orwelldb manual', function () {
 
     })
 
-    it('cnt', function (done) {
+    it('cnt1', function (done) {
 
 
         $({
@@ -328,7 +324,7 @@ describe('orwelldb manual', function () {
                     return dataset.count()
                 })
                 .then(function (cnt) {
-                    assert.equal(cnt, 1);
+                    assert.equal(cnt, 3);
                     done()
                 })
                 .catch(function (err) {
@@ -337,7 +333,7 @@ describe('orwelldb manual', function () {
 
     })
 
-    it('cnt', function (done) {
+    it('cnt2', function (done) {
 
 
         $({

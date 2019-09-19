@@ -1,11 +1,15 @@
 var assert = require('assert');
 var orwell = require('../orwelldb')
-var mysqlAdapter = require('../adapters/mysqlAdapter')
+//var mysqlAdapter = require('../adapters/mysqlAdapter')
 var datascript = orwell.datascript
 var $ = orwell.$;
 var fs = require('fs')
 var pem = fs.readFileSync('./_tests/pem').toString();
 
+//mysql adapter was deactivated, becase of `found 1 high severity vulnerability`
+//but for you projects you ca rewrite this adapter or create new. And make audit false when install orm package. 
+
+/*
 describe('orwelldb mysql adapter', function () {
 
     it('add Pem', function (done) {
@@ -184,3 +188,5 @@ describe('orwelldb', function () {
 
 
 });
+
+*/

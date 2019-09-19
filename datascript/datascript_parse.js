@@ -1,5 +1,6 @@
-var bitPony = require('bitpony');
-require('./json');
+const bitPony = require('bitpony');
+const owl = require('bitowl');
+//require('./json');
 
 var stackConst = require('./const').const
 var scriptOps = require('./const').ops
@@ -76,7 +77,8 @@ datascript_parse.prototype.parseScript = function () {
     if ((stack.length == 1 && stack[0] === true) || stack.length == 0) {
         this.executed = true;
         this.success = true;
-        this.json = bitPony.json.read(this.decrypted);
+        //this.json = bitPony.json.read(this.decrypted);//1
+        this.json = owl.unpack(this.decrypted).value;
     } else if (!this.canRead) {
         this.executed = true;
         this.success = true;

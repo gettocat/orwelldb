@@ -1,4 +1,5 @@
-var bitPony = require('bitpony');
+const bitPony = require('bitpony');
+const owl = require('bitowl');
 
 encodeUtf8 = function (str) {
     return unescape(encodeURIComponent(str));

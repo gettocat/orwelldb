@@ -1,6 +1,6 @@
 {
     "name": "orwelldb",
-    "version": "0.0.12",
+    "version": "0.0.13",
     "description": "Library, wich helps syncronize blockchain and any database use datascript protocol to write operations (can be wroten in blockchain transactions hex like scriptSig or scriptPubKey)",
     "keywords": [
         "database",
@@ -19,11 +19,11 @@
         "bitpony": "^0.0.1",
         "lokijs": "^1.5.0",
         "node-rsa": "^0.4.2",
-        "hash.js": "^1.1.3"
+        "hash.js": "^1.1.3",
+        "bitowl": "^0.0.2"
     },
     "devDependencies": {
-        "orm": "^3.2.4",
-        "mocha": "^3.5.3"
+        "mocha": "^6.2.0"
     },
     "author": "Nanocat (@orwellcat) <alex@letris.ru>",
     "license": "MIT",

@@ -1,5 +1,6 @@
-var bitPony = require('bitpony');
-require('./json');
+const bitPony = require('bitpony');
+const owl = require('bitowl');
+//require('./json');
 
 var stackConst = require('./const').const
 var scriptOps = require('./const').ops
@@ -64,7 +65,8 @@ datascript_build.prototype = {
         if (typeof data == 'string' || typeof data == 'number' || data instanceof Array)
             throw new Error('data must be a js object only');
 
-        this.data_raw = bitPony.json.write(this.data)
+        this.data_raw = owl.pack(this.data);
+        //this.data_raw = bitPony.json.write(this.data)//
         return this;
 
     },
@@ -121,7 +123,8 @@ datascript_build.prototype = {
 
     },
     encrypt: function () {
-        var b = bitPony.json.write(this.data);
+        //var b = bitPony.json.write(this.data);
+        let b = owl.pack(this.data);
 
         if (this.encryption_algorithm == 0x1) {//rsa
 
